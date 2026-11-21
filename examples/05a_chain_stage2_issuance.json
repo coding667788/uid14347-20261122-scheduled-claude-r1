@@ -1,0 +1,49 @@
+{
+  "schema": "challenge-ledger/v1",
+  "batch_id": "b-mig-issue",
+  "policies": [
+    {
+      "version": 1,
+      "recipes": [
+        {
+          "id": "s1-two-factor",
+          "stage": 1,
+          "factors": [
+            "device",
+            "human"
+          ],
+          "distinct_principals": true
+        },
+        {
+          "id": "s2-confirm",
+          "stage": 2,
+          "factors": [
+            "human"
+          ]
+        }
+      ]
+    }
+  ],
+  "events": [
+    {
+      "event_id": "i1",
+      "type": "submit_proof",
+      "request_id": "REQ-1",
+      "proof_id": "PF-final",
+      "stage": 2,
+      "factor": "human",
+      "principal": "PRIN-carol",
+      "trust_group": "TG-staff",
+      "trusted": true,
+      "challenge_id": "CHL-final",
+      "now": 320
+    },
+    {
+      "event_id": "i2",
+      "type": "advance",
+      "request_id": "REQ-1",
+      "stage": 2,
+      "now": 330
+    }
+  ]
+}

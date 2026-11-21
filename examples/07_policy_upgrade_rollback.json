@@ -1,0 +1,150 @@
+{
+  "schema": "challenge-ledger/v1",
+  "batch_id": "b-policy",
+  "policies": [
+    {
+      "version": 1,
+      "recipes": [
+        {
+          "id": "s1-two-factor",
+          "stage": 1,
+          "factors": [
+            "device",
+            "human"
+          ],
+          "distinct_principals": true
+        },
+        {
+          "id": "s2-confirm",
+          "stage": 2,
+          "factors": [
+            "human"
+          ]
+        }
+      ]
+    }
+  ],
+  "events": [
+    {
+      "event_id": "e-register",
+      "type": "register",
+      "request_id": "REQ-1",
+      "subject_id": "SUBJ-alice",
+      "org": "ORG-north",
+      "resource": "FILESET-quarterly",
+      "operation": "read",
+      "op_version": 3,
+      "risk": "high",
+      "policy_version": 1,
+      "generation": "GEN-1",
+      "now": 100,
+      "ttl": 9000,
+      "challenge_id": "CHL-s1"
+    },
+    {
+      "event_id": "e1",
+      "type": "submit_proof",
+      "request_id": "REQ-1",
+      "proof_id": "PF-device",
+      "stage": 1,
+      "factor": "device",
+      "principal": "PRIN-laptop",
+      "trust_group": "TG-devices",
+      "trusted": true,
+      "now": 110
+    },
+    {
+      "event_id": "e2",
+      "type": "submit_proof",
+      "request_id": "REQ-1",
+      "proof_id": "PF-human",
+      "stage": 1,
+      "factor": "human",
+      "principal": "PRIN-bob",
+      "trust_group": "TG-staff",
+      "trusted": true,
+      "now": 120
+    },
+    {
+      "event_id": "e3",
+      "type": "advance",
+      "request_id": "REQ-1",
+      "stage": 1,
+      "now": 130,
+      "next_challenge_id": "CHL-s2"
+    },
+    {
+      "event_id": "e4",
+      "type": "issue_migration_token",
+      "request_id": "REQ-1",
+      "token_id": "TOK-1",
+      "to_generation": "GEN-2",
+      "to_org": "ORG-south",
+      "predecessor": null,
+      "challenge_id": "CHL-s2",
+      "now": 140
+    },
+    {
+      "event_id": "e5",
+      "type": "migrate",
+      "request_id": "REQ-1",
+      "token_id": "TOK-1",
+      "to_generation": "GEN-2",
+      "to_org": "ORG-south",
+      "preserve_stage1": true,
+      "now": 150,
+      "next_challenge_id": "CHL-s2-after"
+    },
+    {
+      "event_id": "e6",
+      "type": "define_policy",
+      "policy": {
+        "version": 2,
+        "recipes": [
+          {
+            "id": "s1-hardware-plus-human",
+            "stage": 1,
+            "requirements": [
+              {
+                "kind": "device",
+                "count": 1,
+                "trust_groups": [
+                  "TG-hardware"
+                ]
+              },
+              {
+                "kind": "human",
+                "count": 1
+              }
+            ],
+            "distinct_principals": true,
+            "distinct_trust_groups": true
+          },
+          {
+            "id": "s2-fresh-human",
+            "stage": 2,
+            "factors": [
+              "human"
+            ],
+            "distinct_trust_groups": true
+          }
+        ]
+      }
+    },
+    {
+      "event_id": "e7",
+      "type": "adopt_policy",
+      "request_id": "REQ-1",
+      "policy_version": 2,
+      "now": 160
+    },
+    {
+      "event_id": "e8",
+      "type": "advance",
+      "request_id": "REQ-1",
+      "stage": 2,
+      "now": 170,
+      "next_challenge_id": "CHL-s1-redo"
+    }
+  ]
+}

@@ -1,0 +1,97 @@
+{
+  "schema": "challenge-ledger/v1",
+  "batch_id": "b-high-risk",
+  "policies": [
+    {
+      "version": 1,
+      "recipes": [
+        {
+          "id": "s1-two-factor",
+          "stage": 1,
+          "factors": [
+            "device",
+            "human"
+          ],
+          "distinct_principals": true
+        },
+        {
+          "id": "s2-confirm",
+          "stage": 2,
+          "factors": [
+            "human"
+          ]
+        }
+      ]
+    }
+  ],
+  "events": [
+    {
+      "event_id": "e-register",
+      "type": "register",
+      "request_id": "REQ-1",
+      "subject_id": "SUBJ-alice",
+      "org": "ORG-north",
+      "resource": "FILESET-quarterly",
+      "operation": "read",
+      "op_version": 3,
+      "risk": "high",
+      "policy_version": 1,
+      "generation": "GEN-1",
+      "now": 200,
+      "ttl": 9000,
+      "challenge_id": "CHL-1a"
+    },
+    {
+      "event_id": "e1",
+      "type": "submit_proof",
+      "request_id": "REQ-1",
+      "proof_id": "PF-device",
+      "stage": 1,
+      "factor": "device",
+      "principal": "PRIN-laptop",
+      "trust_group": "TG-devices",
+      "trusted": true,
+      "now": 210
+    },
+    {
+      "event_id": "e2",
+      "type": "submit_proof",
+      "request_id": "REQ-1",
+      "proof_id": "PF-human",
+      "stage": 1,
+      "factor": "human",
+      "principal": "PRIN-bob",
+      "trust_group": "TG-staff",
+      "trusted": true,
+      "now": 220
+    },
+    {
+      "event_id": "e3",
+      "type": "advance",
+      "request_id": "REQ-1",
+      "stage": 1,
+      "now": 230,
+      "next_challenge_id": "CHL-2a"
+    },
+    {
+      "event_id": "e4",
+      "type": "submit_proof",
+      "request_id": "REQ-1",
+      "proof_id": "PF-confirm",
+      "stage": 2,
+      "factor": "human",
+      "principal": "PRIN-carol",
+      "trust_group": "TG-staff",
+      "trusted": true,
+      "challenge_id": "CHL-2a",
+      "now": 240
+    },
+    {
+      "event_id": "e5",
+      "type": "advance",
+      "request_id": "REQ-1",
+      "stage": 2,
+      "now": 250
+    }
+  ]
+}

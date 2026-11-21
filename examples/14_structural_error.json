@@ -1,0 +1,44 @@
+{
+  "schema": "challenge-ledger/v1",
+  "batch_id": "b-structural",
+  "policies": [
+    {
+      "version": 1,
+      "recipes": [
+        {
+          "id": "s1-two-factor",
+          "stage": 1,
+          "factors": [
+            "device",
+            "human"
+          ],
+          "distinct_principals": true
+        },
+        {
+          "id": "s2-confirm",
+          "stage": 2,
+          "factors": [
+            "human"
+          ]
+        }
+      ]
+    }
+  ],
+  "events": [
+    {
+      "event_id": "e-register",
+      "type": "register",
+      "request_id": "REQ-1",
+      "subject_id": "SUBJ-alice",
+      "org": "ORG-north",
+      "resource": "FILESET-quarterly",
+      "operation": "read",
+      "op_version": 3,
+      "risk": "medium",
+      "policy_version": 1,
+      "generation": "GEN-1",
+      "now": 100,
+      "ttl": 5000
+    }
+  ]
+}

@@ -1,0 +1,91 @@
+{
+  "schema": "challenge-ledger/v1",
+  "batch_id": "b-groups",
+  "policies": [
+    {
+      "version": 3,
+      "recipes": [
+        {
+          "id": "s1-three-groups",
+          "stage": 1,
+          "requirements": [
+            {
+              "kind": "device",
+              "count": 3,
+              "distinct_principals": true
+            }
+          ],
+          "distinct_trust_groups": true
+        },
+        {
+          "id": "s2-fresh-human",
+          "stage": 2,
+          "factors": [
+            "human"
+          ]
+        }
+      ]
+    }
+  ],
+  "events": [
+    {
+      "event_id": "e-register",
+      "type": "register",
+      "request_id": "REQ-1",
+      "subject_id": "SUBJ-alice",
+      "org": "ORG-north",
+      "resource": "FILESET-quarterly",
+      "operation": "read",
+      "op_version": 3,
+      "risk": "low",
+      "policy_version": 3,
+      "generation": "GEN-1",
+      "now": 100,
+      "ttl": 9000,
+      "challenge_id": "CHL-g"
+    },
+    {
+      "event_id": "e1",
+      "type": "submit_proof",
+      "request_id": "REQ-1",
+      "proof_id": "PF-d1",
+      "stage": 1,
+      "factor": "device",
+      "principal": "PRIN-1",
+      "trust_group": "TG-red",
+      "trusted": true,
+      "now": 110
+    },
+    {
+      "event_id": "e2",
+      "type": "submit_proof",
+      "request_id": "REQ-1",
+      "proof_id": "PF-d2",
+      "stage": 1,
+      "factor": "device",
+      "principal": "PRIN-2",
+      "trust_group": "TG-blue",
+      "trusted": true,
+      "now": 120
+    },
+    {
+      "event_id": "e3",
+      "type": "submit_proof",
+      "request_id": "REQ-1",
+      "proof_id": "PF-d3",
+      "stage": 1,
+      "factor": "device",
+      "principal": "PRIN-3",
+      "trust_group": "TG-red",
+      "trusted": true,
+      "now": 130
+    },
+    {
+      "event_id": "e4",
+      "type": "advance",
+      "request_id": "REQ-1",
+      "stage": 1,
+      "now": 140
+    }
+  ]
+}

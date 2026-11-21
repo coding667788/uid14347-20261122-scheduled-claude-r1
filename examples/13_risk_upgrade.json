@@ -1,0 +1,77 @@
+{
+  "schema": "challenge-ledger/v1",
+  "batch_id": "b-upgrade",
+  "policies": [
+    {
+      "version": 1,
+      "recipes": [
+        {
+          "id": "s1-two-factor",
+          "stage": 1,
+          "factors": [
+            "device",
+            "human"
+          ],
+          "distinct_principals": true
+        },
+        {
+          "id": "s2-confirm",
+          "stage": 2,
+          "factors": [
+            "human"
+          ]
+        }
+      ]
+    }
+  ],
+  "events": [
+    {
+      "event_id": "e-register",
+      "type": "register",
+      "request_id": "REQ-1",
+      "subject_id": "SUBJ-alice",
+      "org": "ORG-north",
+      "resource": "FILESET-quarterly",
+      "operation": "read",
+      "op_version": 3,
+      "risk": "low",
+      "policy_version": 1,
+      "generation": "GEN-1",
+      "now": 100,
+      "ttl": 9000,
+      "challenge_id": "CHL-u"
+    },
+    {
+      "event_id": "e1",
+      "type": "submit_proof",
+      "request_id": "REQ-1",
+      "proof_id": "PF-device",
+      "stage": 1,
+      "factor": "device",
+      "principal": "PRIN-laptop",
+      "trust_group": "TG-devices",
+      "trusted": true,
+      "now": 110
+    },
+    {
+      "event_id": "e2",
+      "type": "submit_proof",
+      "request_id": "REQ-1",
+      "proof_id": "PF-human",
+      "stage": 1,
+      "factor": "human",
+      "principal": "PRIN-bob",
+      "trust_group": "TG-staff",
+      "trusted": true,
+      "now": 120
+    },
+    {
+      "event_id": "e3",
+      "type": "upgrade_risk",
+      "request_id": "REQ-1",
+      "risk": "high",
+      "now": 130,
+      "next_challenge_id": "CHL-u2"
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "schema": "challenge-ledger/v1",
+  "batch_id": "b-mig-stale",
+  "policies": [
+    {
+      "version": 1,
+      "recipes": [
+        {
+          "id": "s1-two-factor",
+          "stage": 1,
+          "factors": [
+            "device",
+            "human"
+          ],
+          "distinct_principals": true
+        },
+        {
+          "id": "s2-confirm",
+          "stage": 2,
+          "factors": [
+            "human"
+          ]
+        }
+      ]
+    }
+  ],
+  "events": [
+    {
+      "event_id": "stale-b",
+      "type": "migrate",
+      "request_id": "REQ-1",
+      "token_id": "TOK-1",
+      "to_generation": "GEN-5",
+      "to_org": "ORG-west",
+      "preserve_stage1": true,
+      "now": 410
+    }
+  ]
+}

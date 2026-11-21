@@ -1,0 +1,51 @@
+{
+  "schema": "challenge-ledger/v1",
+  "batch_id": "b-mig-back",
+  "policies": [
+    {
+      "version": 1,
+      "recipes": [
+        {
+          "id": "s1-two-factor",
+          "stage": 1,
+          "factors": [
+            "device",
+            "human"
+          ],
+          "distinct_principals": true
+        },
+        {
+          "id": "s2-confirm",
+          "stage": 2,
+          "factors": [
+            "human"
+          ]
+        }
+      ]
+    }
+  ],
+  "events": [
+    {
+      "event_id": "s3a",
+      "type": "issue_migration_token",
+      "request_id": "REQ-1",
+      "token_id": "TOK-3",
+      "to_generation": "GEN-4",
+      "to_org": "ORG-north",
+      "predecessor": 2,
+      "challenge_id": "CHL-s2-east",
+      "now": 300
+    },
+    {
+      "event_id": "s3b",
+      "type": "migrate",
+      "request_id": "REQ-1",
+      "token_id": "TOK-3",
+      "to_generation": "GEN-4",
+      "to_org": "ORG-north",
+      "preserve_stage1": true,
+      "now": 310,
+      "next_challenge_id": "CHL-final"
+    }
+  ]
+}
